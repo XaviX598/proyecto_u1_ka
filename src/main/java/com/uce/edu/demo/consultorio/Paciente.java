@@ -1,5 +1,9 @@
 package com.uce.edu.demo.consultorio;
 
+import org.springframework.stereotype.Component;
+
+//les damos una metadata
+@Component
 public class Paciente {
 	private String nombre;
 	private int edad;

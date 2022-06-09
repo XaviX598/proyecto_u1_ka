@@ -3,9 +3,10 @@ package com.uce.edu.demo.banco.modelo;
 import java.math.BigDecimal;
 
 public class CuentaBancaria {
+	
+	
 	private String numero;
 	private BigDecimal saldo;
-	
 	
 	
 	@Override
@@ -25,6 +26,8 @@ public class CuentaBancaria {
 	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
 	}
+	
+	
 	
 	
 

@@ -1,6 +1,7 @@
 package com.uce.edu.demo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,21 +28,19 @@ import com.uce.edu.demo.modelo.Matricula;
 import com.uce.edu.demo.repository.IMateriaRepository;
 import com.uce.edu.demo.repository.IMatriculaRepository;
 import com.uce.edu.demo.service.IEstudianteService;
+import com.uce.edu.demo.supermercado.modelo.Inventario;
+import com.uce.edu.demo.supermercado.modelo.Producto;
+import com.uce.edu.demo.supermercado.service.IGestorInventarioService;
+import com.uce.edu.demo.supermercado.service.IInventarioService;
 
 @SpringBootApplication
 public class ProyectoU1KaApplication implements CommandLineRunner {
 
 	@Autowired
-	private ICuentaBancariaService iCuentaBancariaService;
-
+	public IInventarioService iInventarioService;
+	
 	@Autowired
-	private ITransferenciaService iTransferenciaService;
-
-	@Autowired
-	private IDepositoService iDepositoService;
-
-	@Autowired
-	private IRetiroService iRetiroService;
+	private IGestorInventarioService iGestorInventarioService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU1KaApplication.class, args);
@@ -50,98 +49,60 @@ public class ProyectoU1KaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// *****************CUENTA BANCARIA
 
-		CuentaBancaria c = new CuentaBancaria();
+		Producto pro1 = new Producto();
+		pro1.setNombre("Arroz");
+		pro1.setPrecioInicial(new BigDecimal(30.50).setScale(2, RoundingMode.HALF_UP));
+		pro1.setCantidad(10);
+		pro1.setFecha(LocalDateTime.of(2022, 8, 4, 20, 40, 0));
+		
+		Producto pro2 = new Producto();
+		pro2.setNombre("Carne");
+		pro2.setPrecioInicial(new BigDecimal(8.30).setScale(2, RoundingMode.HALF_UP));
+		pro2.setCantidad(5);
+		pro2.setFecha(LocalDateTime.of(2022, 5, 5, 13, 40, 0));
+		
+		Producto pro3 = new Producto();
+		pro3.setNombre("Pollo");
+		pro3.setPrecioInicial(new BigDecimal(7.5).setScale(2, RoundingMode.HALF_UP));
+		pro3.setCantidad(2);
+		pro3.setFecha(LocalDateTime.of(2022, 9, 30, 11, 30, 30));
+		
+		Producto pro4 = new Producto();
+		pro4.setNombre("Comida para perro");
+		pro4.setPrecioInicial(new BigDecimal(29.50).setScale(2, RoundingMode.HALF_UP));
+		pro4.setCantidad(3);
+		pro4.setFecha(LocalDateTime.of(2022, 2, 4, 23, 20, 30));
+		
+		Producto pro5 = new Producto();
+		pro5.setNombre("Leche");
+		pro5.setPrecioInicial(new BigDecimal(1.00).setScale(2, RoundingMode.HALF_UP));
+		pro5.setCantidad(3);
+		pro5.setFecha(LocalDateTime.of(2022, 8, 6, 10, 15, 0));
+		
+		Producto pro6 = new Producto();
+		pro6.setNombre("Salmon");
+		pro6.setPrecioInicial(new BigDecimal(10.85).setScale(2, RoundingMode.HALF_UP));
+		pro6.setCantidad(5);
+		pro6.setFecha(LocalDateTime.of(2022, 3, 5, 12, 20, 0));
 
-		c.setNumero("1234");
-		c.setSaldo(new BigDecimal(800));
-
-		CuentaBancaria c1 = new CuentaBancaria();
-
-		c1.setNumero("7894");
-		c1.setSaldo(new BigDecimal(800));
-
-		CuentaBancaria c2 = new CuentaBancaria();
-
-		c2.setNumero("1111");
-		c2.setSaldo(new BigDecimal(700));
-
-		this.iCuentaBancariaService.ingresarCuenta("1234", new BigDecimal(800));
-
-		c2.setNumero("454");
-		System.out.println("\n");
-		this.iCuentaBancariaService.actualizar(c2);
-		System.out.println("\n");
-		this.iCuentaBancariaService.buscar("454");
-		System.out.println("\n");
-		this.iCuentaBancariaService.eliminarCuenta("1234");
-		System.out.println("\n");
-//		//******************TRANSFERENCIA 
-//
-		Transferencia t = new Transferencia();
-		t.setFechaTransferencia(LocalDateTime.now());
-		t.setMontoTransferir(new BigDecimal(80));
-		t.setNumeroCuentaD("454");
-		t.setNumeroCuentaOrigen("7894");
-
-		Transferencia t1 = new Transferencia();
-		t1.setFechaTransferencia(LocalDateTime.now());
-		t1.setMontoTransferir(new BigDecimal(80));
-		t1.setNumeroCuentaD("7894");
-		t1.setNumeroCuentaOrigen("454");
-
-		this.iTransferenciaService.realizarTransferencia("454", "7894", new BigDecimal(20));
-		System.out.println("\n");
-		this.iTransferenciaService.buscarTransferencia(t1);
-		System.out.println("\n");
-		t1.setMontoTransferir(new BigDecimal(501));
-		this.iTransferenciaService.actualizarTransferencia(t1);
-		System.out.println("\n");
-		this.iTransferenciaService.eliminarTransferencia(t);
-		System.out.println("\n");
-
-//		//******************DEPOSITO 
-		Deposito d = new Deposito();
-		d.setFeha(LocalDateTime.now());
-		d.setMontoDeposito(new BigDecimal(20));
-		d.setNumeroCuentaDestino("7894");
-
-		Deposito d1 = new Deposito();
-		d1.setFeha(LocalDateTime.now());
-		d1.setMontoDeposito(new BigDecimal(20));
-		d1.setNumeroCuentaDestino("1111");
-
-		this.iDepositoService.realizarDeposito("1111", new BigDecimal(50));
-		System.out.println("\n");
-		this.iDepositoService.buscarDeposito("1234");
-		System.out.println("\n");
-		d1.setMontoDeposito(new BigDecimal(90));
-		this.iDepositoService.actualizarDeposito(d);
-		System.out.println("\n");
-		this.iDepositoService.eliminarDeposito("7894");
-		System.out.println("\n");
-
-		// ******************RETIRO
-		Retiro r = new Retiro();
-		r.setFecha(LocalDateTime.now());
-		r.setMontoRetiro(new BigDecimal(30));
-		r.setNumeroCuentaOrigen("66654");
-
-		Retiro r1 = new Retiro();
-		r1.setFecha(LocalDateTime.now());
-		r1.setMontoRetiro(new BigDecimal(30));
-		r1.setNumeroCuentaOrigen("65445");
-
-		this.iRetiroService.realizarRetiro("1234", new BigDecimal(40));
-		System.out.println("\n");
-		this.iRetiroService.buscarRetiro("66654");
-		System.out.println("\n");
-		r.setMontoRetiro(new BigDecimal(80));
-		this.iRetiroService.actualizarRetiro(null);
-		System.out.println("\n");
-		this.iRetiroService.eliminarRetiro("65445");
-
+		
+		List<Producto> producto1 = new ArrayList<>();
+		producto1.add(pro1);
+		producto1.add(pro2);
+		producto1.add(pro4);
+		producto1.add(pro5);
+		producto1.add(pro3);
+		producto1.add(pro6);
+		
+		Inventario inventario1 = new Inventario();
+		inventario1.setCodigo("1");
+		inventario1.setProducto(producto1);
+		
+		this.iInventarioService.ingresarInventario(inventario1);
+		
+		this.iGestorInventarioService.reporte(LocalDateTime.of(2022, 5, 12, 0, 0, 0), inventario1);
+		
 	}
 
 }

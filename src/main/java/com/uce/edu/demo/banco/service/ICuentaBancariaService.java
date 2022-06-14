@@ -13,5 +13,8 @@ public interface ICuentaBancariaService {
 	public void ingresarCuenta(String numero, BigDecimal dinero);
 
 	public void eliminarCuenta(String numero);
+	
+
+	public BigDecimal calcularInteres(String numeroCta, BigDecimal saldo);
 
 }

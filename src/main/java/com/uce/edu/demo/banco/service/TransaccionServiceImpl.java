@@ -24,6 +24,7 @@ import com.uce.edu.demo.banco.to.TransaccionTo;
 public class TransaccionServiceImpl implements ITransaccionService {
 
 	@Autowired
+	
 	private ITransferenciaService iTransferenciaService;
 	@Autowired
 	private IDepositoService iDepositoService;

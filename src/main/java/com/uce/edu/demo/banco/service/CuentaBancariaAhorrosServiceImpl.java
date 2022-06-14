@@ -42,8 +42,9 @@ public class CuentaBancariaAhorrosServiceImpl implements ICuentaBancariaService{
 		//codigo duplicado lo solucionamos con una fachada, gestor
 		//CuentaBancaria cta = this.iCuentaBancariaRepository.buscar(numeroCta);
 //		BigDecimal saldo = null;
-		BigDecimal interes= new BigDecimal(560).multiply(new BigDecimal(15)).divide(new BigDecimal(100));
-		interes =interes.add( saldo.divide(new BigDecimal(10)));
+		BigDecimal interes = new BigDecimal(560).multiply(new BigDecimal(15)).divide(new BigDecimal(100));
+		interes = interes.add(saldo.divide(new BigDecimal(100)));
+		System.out.println("El interes de la cuenta de ahorro es: ");
 		return interes;
 	}
 

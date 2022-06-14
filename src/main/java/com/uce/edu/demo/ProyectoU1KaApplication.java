@@ -40,8 +40,6 @@ public class ProyectoU1KaApplication implements CommandLineRunner {
 	@Autowired
 	public IFachadaCuentaBancaria iFachadaCuentaBancaria;
 	
-	
-
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU1KaApplication.class, args);
 	}

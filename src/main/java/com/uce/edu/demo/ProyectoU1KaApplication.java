@@ -26,9 +26,13 @@ import com.uce.edu.demo.consultorio.CitaMedica2;
 import com.uce.edu.demo.modelo.Estudiante;
 import com.uce.edu.demo.modelo.Materia;
 import com.uce.edu.demo.modelo.Matricula;
+import com.uce.edu.demo.modelo.ProfesorGeneral;
+import com.uce.edu.demo.modelo.ProfesorMateria;
 import com.uce.edu.demo.repository.IMateriaRepository;
 import com.uce.edu.demo.repository.IMatriculaRepository;
 import com.uce.edu.demo.service.IEstudianteService;
+import com.uce.edu.demo.service.IMateriaService;
+import com.uce.edu.demo.service.IMatriculaService;
 import com.uce.edu.demo.supermercado.modelo.Inventario;
 import com.uce.edu.demo.supermercado.modelo.Producto;
 import com.uce.edu.demo.supermercado.service.IGestorInventarioService;
@@ -38,7 +42,19 @@ import com.uce.edu.demo.supermercado.service.IInventarioService;
 public class ProyectoU1KaApplication implements CommandLineRunner {
 
 	@Autowired
-	public IFachadaCuentaBancaria iFachadaCuentaBancaria;
+	private ProfesorGeneral general;
+	
+	@Autowired
+	private ProfesorGeneral general1;
+	
+	@Autowired
+	private ProfesorMateria materia;
+	
+	@Autowired
+	private ProfesorMateria materia1;
+	
+	@Autowired
+	private IMatriculaService iMatriculaService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU1KaApplication.class, args);
@@ -47,9 +63,32 @@ public class ProyectoU1KaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		BigDecimal interes= this.iFachadaCuentaBancaria.calcularInteres("1234");
 		
-		System.out.println(interes);
+		System.out.println("EJEMPLO SINGLETON");
+		this.general.setNombre("Xavier");
+		this.general.setApellido("Aguilar");
+		
+		System.out.println(this.general);
+		this.general1.setNombre("Pepito");
+		System.out.println("---------------------------");
+		System.out.println(this.general1);
+		
+		System.out.println("---------------------------");
+		System.out.println(this.general1);
+		
+		System.out.println("EJEMPLO PROTOTYPE");
+		this.materia.setNombre("Kevin");
+		this.materia.setApellido("Velasco");
+		System.out.println(this.materia);
+		System.out.println("----------");
+		System.out.println(this.materia1);
+		
+		Matricula matricula1 = new Matricula();
+		matricula1.setEstudiante(new Estudiante());
+		matricula1.setMateria(new ArrayList<Materia>());
+		matricula1.setNumero("13123");
+		this.iMatriculaService.ingresarMatricula(matricula1);
+		
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.uce.edu.demo.cine;
+package com.uce.edu.demo.cine.modelo;
 
 import java.time.LocalDateTime;
 
@@ -11,8 +11,15 @@ public class Reserva {
 	private Cliente cliente;
 	private Pelicula pelicula;
 	
+	@Override
+	public String toString() {
+		return "Reserva [horarioPelicula=" + horarioPelicula + ", cliente=" + cliente + ", pelicula=" + pelicula + "]";
+	}
+	
 	//DI por constructor
 	
+	
+
 	public Reserva(Cliente cliente) {
 		this.cliente= cliente;
 	}

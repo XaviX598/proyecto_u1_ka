@@ -1,60 +1,41 @@
 package com.uce.edu.demo;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.uce.edu.demo.banco.modelo.CuentaBancaria;
-import com.uce.edu.demo.banco.modelo.Deposito;
-import com.uce.edu.demo.banco.modelo.Retiro;
-import com.uce.edu.demo.banco.modelo.Transferencia;
-import com.uce.edu.demo.banco.service.ICuentaBancariaService;
-import com.uce.edu.demo.banco.service.IDepositoService;
-import com.uce.edu.demo.banco.service.IFachadaCuentaBancaria;
-import com.uce.edu.demo.banco.service.IRetiroService;
-import com.uce.edu.demo.banco.service.ITransferenciaService;
-import com.uce.edu.demo.cine.Reserva;
-import com.uce.edu.demo.consultorio.CitaMedica;
-import com.uce.edu.demo.consultorio.CitaMedica2;
-import com.uce.edu.demo.modelo.Estudiante;
-import com.uce.edu.demo.modelo.Materia;
-import com.uce.edu.demo.modelo.Matricula;
-import com.uce.edu.demo.modelo.ProfesorGeneral;
-import com.uce.edu.demo.modelo.ProfesorMateria;
-import com.uce.edu.demo.repository.IMateriaRepository;
-import com.uce.edu.demo.repository.IMatriculaRepository;
-import com.uce.edu.demo.service.IEstudianteService;
-import com.uce.edu.demo.service.IMateriaService;
-import com.uce.edu.demo.service.IMatriculaService;
-import com.uce.edu.demo.supermercado.modelo.Inventario;
-import com.uce.edu.demo.supermercado.modelo.Producto;
-import com.uce.edu.demo.supermercado.service.IGestorInventarioService;
-import com.uce.edu.demo.supermercado.service.IInventarioService;
+
+import com.uce.edu.demo.cine.service.IReservaService;
+
+import com.uce.edu.demo.cine.modelo.*;
 
 @SpringBootApplication
 public class ProyectoU1KaApplication implements CommandLineRunner {
 
 	@Autowired
-	private ProfesorGeneral general;
+	private SalaNormal normal;
 	
 	@Autowired
-	private ProfesorGeneral general1;
+	private SalaNormal normal1;
 	
 	@Autowired
-	private ProfesorMateria materia;
+	private SalaNormal normal2;
 	
 	@Autowired
-	private ProfesorMateria materia1;
+	private SalaVip vip;
 	
 	@Autowired
-	private IMatriculaService iMatriculaService;
+	private SalaVip vip1;
+	
+	@Autowired
+	private SalaVip vip2;
+	
+	@Autowired
+	private IReservaService iReservaService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU1KaApplication.class, args);
@@ -63,31 +44,62 @@ public class ProyectoU1KaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		
+		System.out.println("---------------------------\n");
 		System.out.println("EJEMPLO SINGLETON");
-		this.general.setNombre("Xavier");
-		this.general.setApellido("Aguilar");
-		
-		System.out.println(this.general);
-		this.general1.setNombre("Pepito");
+		System.out.println();
+		this.normal.setCosto(new BigDecimal(6));
+		this.normal.setNumeroAsientos(40);
+		this.normal.setNumeroSala("A5");
+		System.out.println(this.normal);
+		System.out.println();
+		this.normal.setCosto(new BigDecimal(6));
+		this.normal1.setNumeroAsientos(30);
+		this.normal1.setNumeroSala("A1");
+		System.out.println(this.normal);
+		System.out.println();
+		this.normal.setCosto(new BigDecimal(6));
+		this.normal2.setNumeroAsientos(35);
+		this.normal2.setNumeroSala("A2");
+		System.out.println(this.normal);
 		System.out.println("---------------------------");
-		System.out.println(this.general1);
-		
+		System.out.println();
+		this.normal1.setCosto(new BigDecimal(6));
+		this.normal1.setNumeroSala("A3");
+		this.normal1.setNumeroAsientos(25);
+		System.out.println(this.normal1);
 		System.out.println("---------------------------");
-		System.out.println(this.general1);
-		
+		System.out.println();
+		this.normal2.setCosto(new BigDecimal(6));
+		this.normal2.setNumeroSala("A4");
+		this.normal2.setNumeroAsientos(40);
+		System.out.println(this.normal2);
+		System.out.println("---------------------------\n");
 		System.out.println("EJEMPLO PROTOTYPE");
-		this.materia.setNombre("Kevin");
-		this.materia.setApellido("Velasco");
-		System.out.println(this.materia);
+		System.out.println();
+		this.vip.setCosto(new BigDecimal(12));
+		this.vip.setNumeroAsientos(40);
+		this.vip.setNumeroSala("Sala Vip");
+		System.out.println(this.vip);
 		System.out.println("----------");
-		System.out.println(this.materia1);
+		System.out.println(this.vip1);
+		System.out.println("----------");
+		System.out.println(this.vip2);
 		
-		Matricula matricula1 = new Matricula();
-		matricula1.setEstudiante(new Estudiante());
-		matricula1.setMateria(new ArrayList<Materia>());
-		matricula1.setNumero("13123");
-		this.iMatriculaService.ingresarMatricula(matricula1);
+		Cliente cliente = new Cliente();
+		cliente.setNombre("Xavier");
+		cliente.setApellido("Aguilar");
+		cliente.setCvv(254);
+		cliente.setNumeroTarjeta(12132123);
+		
+		Pelicula peli = new Pelicula();
+		peli.setNombre("Spiderman");
+		peli.setCategoria("Superheroes");
+		
+		Reserva reserva =new Reserva(cliente);
+		reserva.setCliente(cliente);
+		reserva.setHorarioPelicula(LocalDateTime.of(2022, 5, 3, 2, 0));
+		reserva.setPelicula(peli);
+		this.iReservaService.ingresar(reserva);
 		
 	}
 

@@ -1,4 +1,4 @@
-package com.uce.edu.demo.cine;
+package com.uce.edu.demo.cine.modelo;
 
 import org.springframework.stereotype.Component;
 

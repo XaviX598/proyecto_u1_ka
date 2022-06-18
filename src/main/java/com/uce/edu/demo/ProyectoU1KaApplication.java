@@ -2,6 +2,7 @@ package com.uce.edu.demo;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,32 +11,31 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 import com.uce.edu.demo.cine.service.IReservaService;
-
+import com.uce.edu.demo.modelo.Estudiante;
+import com.uce.edu.demo.modelo.Materia;
+import com.uce.edu.demo.modelo.Matricula;
+import com.uce.edu.demo.modelo.ProfesorGeneral;
+import com.uce.edu.demo.modelo.ProfesorMateria;
+import com.uce.edu.demo.service.IMatriculaService;
 import com.uce.edu.demo.cine.modelo.*;
 
 @SpringBootApplication
 public class ProyectoU1KaApplication implements CommandLineRunner {
 
 	@Autowired
-	private SalaNormal normal;
+	private ProfesorGeneral general;
 	
 	@Autowired
-	private SalaNormal normal1;
+	private ProfesorGeneral general1;
 	
 	@Autowired
-	private SalaNormal normal2;
+	private ProfesorMateria materia;
 	
 	@Autowired
-	private SalaVip vip;
+	private ProfesorMateria materia1;
 	
 	@Autowired
-	private SalaVip vip1;
-	
-	@Autowired
-	private SalaVip vip2;
-	
-	@Autowired
-	private IReservaService iReservaService;
+	private IMatriculaService iMatriculaService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU1KaApplication.class, args);
@@ -44,63 +44,31 @@ public class ProyectoU1KaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		System.out.println("---------------------------\n");
+		
 		System.out.println("EJEMPLO SINGLETON");
-		System.out.println();
-		this.normal.setCosto(new BigDecimal(6));
-		this.normal.setNumeroAsientos(40);
-		this.normal.setNumeroSala("A5");
-		System.out.println(this.normal);
-		System.out.println();
-		this.normal.setCosto(new BigDecimal(6));
-		this.normal1.setNumeroAsientos(30);
-		this.normal1.setNumeroSala("A1");
-		System.out.println(this.normal);
-		System.out.println();
-		this.normal.setCosto(new BigDecimal(6));
-		this.normal2.setNumeroAsientos(35);
-		this.normal2.setNumeroSala("A2");
-		System.out.println(this.normal);
+		this.general.setNombre("Xavier");
+		this.general.setApellido("Aguilar");
+		
+		System.out.println(this.general);
+		this.general1.setNombre("Pepito");
 		System.out.println("---------------------------");
-		System.out.println();
-		this.normal1.setCosto(new BigDecimal(6));
-		this.normal1.setNumeroSala("A3");
-		this.normal1.setNumeroAsientos(25);
-		System.out.println(this.normal1);
+		System.out.println(this.general1);
+		
 		System.out.println("---------------------------");
-		System.out.println();
-		this.normal2.setCosto(new BigDecimal(6));
-		this.normal2.setNumeroSala("A4");
-		this.normal2.setNumeroAsientos(40);
-		System.out.println(this.normal2);
-		System.out.println("---------------------------\n");
+		System.out.println(this.general1);
+		
 		System.out.println("EJEMPLO PROTOTYPE");
-		System.out.println();
-		this.vip.setCosto(new BigDecimal(12));
-		this.vip.setNumeroAsientos(40);
-		this.vip.setNumeroSala("Sala Vip");
-		System.out.println(this.vip);
+		this.materia.setNombre("Kevin");
+		this.materia.setApellido("Velasco");
+		System.out.println(this.materia);
 		System.out.println("----------");
-		System.out.println(this.vip1);
-		System.out.println("----------");
-		System.out.println(this.vip2);
+		System.out.println(this.materia1);
 		
-		Cliente cliente = new Cliente();
-		cliente.setNombre("Xavier");
-		cliente.setApellido("Aguilar");
-		cliente.setCvv(254);
-		cliente.setNumeroTarjeta(12132123);
-		
-		Pelicula peli = new Pelicula();
-		peli.setNombre("Spiderman");
-		peli.setCategoria("Superheroes");
-		
-		Reserva reserva =new Reserva(cliente);
-		reserva.setCliente(cliente);
-		reserva.setHorarioPelicula(LocalDateTime.of(2022, 5, 3, 2, 0));
-		reserva.setPelicula(peli);
-		this.iReservaService.ingresar(reserva);
+		Matricula matricula1 = new Matricula();
+		matricula1.setEstudiante(new Estudiante());
+		matricula1.setMateria(new ArrayList<Materia>());
+		matricula1.setNumero("13123");
+		this.iMatriculaService.ingresarMatricula(matricula1);
 		
 	}
-
 }
